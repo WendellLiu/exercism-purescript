@@ -1,21 +1,34 @@
-module Bob
-  ( hey
-  ) where
+module Bob where
 
 import Prelude
-import Data.String (toCharArray, singleton)
-import Data.Array (snoc, last)
-import Partial.Unsafe (unsafePartial)
-import Data.Maybe
 
--- foo :: String -> Char
--- foo = (fromJust <<< last <<< toCharArray)
+import Data.Array (last)
+import Data.Maybe (Maybe(..))
+import Data.String (toCharArray, trim, toUpper)
 
+
+whoa :: String
+whoa = "Whoa, chill out!"
+
+whatever :: String
+whatever = "Whatever."
+
+sure :: String
+sure = "Sure."
+
+fine :: String
+fine = "Fine. Be that way!"
+
+getLastChar :: String -> Char
+getLastChar str = case (last <<< toCharArray <<< trim) str of
+  Nothing -> ' '
+  Just s -> s
+
+isAllUpper :: String -> Boolean
+isAllUpper str = ((==) str <<< toUpper) str
 
 hey :: String -> String
--- hey str = singleton <<< unsafePartial <<< fromJust <<< last <<< toCharArray
-hey str = case (last <<< toCharArray) str of
-  Nothing -> "nooooo"
-  Just s -> singleton s
-
--- hey str  = singleton (unsafePartial (fromJust (last (toCharArray str))))
+hey str | ((==) "" <<< trim) str = fine 
+  | isAllUpper str = whoa
+  | ((==) '?' <<< getLastChar) str = sure
+  | otherwise = whatever
