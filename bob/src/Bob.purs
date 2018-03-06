@@ -4,8 +4,7 @@ import Prelude
 
 import Data.Array (last)
 import Data.Maybe (Maybe(..))
-import Data.String (toCharArray, trim, toUpper)
-
+import Data.String (toCharArray, toLower, toUpper, trim)
 
 whoa :: String
 whoa = "Whoa, chill out!"
@@ -25,7 +24,7 @@ getLastChar str = case (last <<< toCharArray <<< trim) str of
   Just s -> s
 
 isAllUpper :: String -> Boolean
-isAllUpper str = ((==) str <<< toUpper) str
+isAllUpper str = ((==) str <<< toUpper) str && ((/=) str <<< toLower) str
 
 hey :: String -> String
 hey str | ((==) "" <<< trim) str = fine 
