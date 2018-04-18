@@ -2,12 +2,10 @@ module Accumulate
   ( accumulate
   ) where
 
-import Prelude
 import Data.List.Types (List)
-import Data.List (concat, null, head, tail, singleton)
+import Data.List (List(Nil), (:))
 
 
-accumulate :: forall a. (a -> a) -> List a -> List a
-accumulate acc f = case null f of
-  false -> concat (singleton acc (head f)) $ accumulate acc (tail f)
-  true -> acc f
+accumulate :: forall a b. (a -> b) -> List a -> List b
+accumulate _ Nil = Nil
+accumulate f (x : xs) = f x : accumulate f xs
